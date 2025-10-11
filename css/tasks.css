@@ -1,0 +1,18 @@
+.tasks {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tasks__empty {
+    width: auto;
+    font-family: Inter, sans-serif;
+    font-size: 24px;
+    line-height: 100%;
+    text-align: center;
+    vertical-align: middle;
+    color: #FFFFFF;
+    border-top: 3px solid #FF8303;
+    border-bottom: 3px solid #FF8303;
+    padding: 1rem;
+}
