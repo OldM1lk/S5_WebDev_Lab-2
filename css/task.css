@@ -6,8 +6,9 @@
 
 .task__content {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 1rem;
-    gap: 1rem;
     background-color: #1F1E1B;
     border-radius: 8px;
     border: 2px solid #A35709;
@@ -16,18 +17,19 @@
 .text__area {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
 }
 
 .text__title {
     font-family: Roboto, sans-serif;
     font-weight: 500;
     font-size: 22px;
+    color: #F0E3CA;
 }
 
 .text__description {
     font-family: Roboto, sans-serif;
     font-size: 14px;
+    color: #F0E3CA;
 }
 
 .task__tools {
