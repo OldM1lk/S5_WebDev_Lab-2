@@ -7,11 +7,11 @@
 }
 
 .button-add:hover {
-    background-color: #1F1E1B;
+    background-color: #23221F;
 }
 
 .input {
-    background-color: #1B1A17;
+    background-color: #242320;
     color: #F0E3CAA3;
     border-radius: 4px;
     font-family: Roboto, sans-serif;
@@ -21,6 +21,6 @@
 }
 
 .input:hover {
-    background-color: #1F1E1B;
+    background-color: #2B2A27;
     color: #F0E3CA;
 }
