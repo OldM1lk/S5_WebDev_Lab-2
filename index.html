@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/form.css">
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/tasks.css">
+    <link rel="stylesheet" href="css/task.css">
 </head>
 <body>
 <header>
@@ -16,13 +17,37 @@
             <input class="input" type="text" name="title" placeholder="Title...">
             <input class="input" type="text" name="description" placeholder="About...">
         </div>
-        <button class="button-add">+</button>
+        <button class="button-add" type="submit">
+            <img src="assets/svg/plus-icon.svg" alt="Plus Icon">
+        </button>
     </form>
 </header>
 <main class="tasks">
     <p class="tasks__empty">No tasks</p>
     <ul class="tasks__list"></ul>
 </main>
+<template id="task-template">
+    <li class="task">
+        <div class="task__content">
+            <div class="text__area">
+                <p class="text__title">Task Title</p>
+                <p class="text__description">Task body about this task...</p>
+            </div>
+            <button class="button-delete">
+                <img src="assets/svg/cross-icon.svg" alt="Cross Icon">
+            </button>
+        </div>
+        <div class="task__tools">
+            <button class="button-share">
+                <img src="assets/svg/share-icon.svg" alt="Share Icon">
+            </button>
+            <button class="button-info">i</button>
+            <button class="button-edit">
+                <img src="assets/svg/pencil-icon.svg" alt="Pencil Icon">
+            </button>
+        </div>
+    </li>
+</template>
 <script src="index.js"></script>
 </body>
 </html>

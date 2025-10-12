@@ -24,3 +24,41 @@
     background-color: #2B2A27;
     color: #F0E3CA;
 }
+
+.button-delete {
+    background-color: #1B1A17;
+    border-radius: 5px;
+    border: 2px solid #A35709;
+    padding: 0 1.5rem 0 1.5rem;
+    cursor: pointer;
+}
+
+.button-delete:hover {
+    background-color: #23221F;
+}
+
+.button-share,
+.button-info,
+.button-edit {
+    background-color: #242320;
+    border-radius: 6px;
+    border: 2px solid #A35709;
+    padding: 0 1.5rem 0 1.5rem;
+    cursor: pointer;
+}
+
+.button-info {
+    font-family: Roboto, sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 18px;
+    text-align: center;
+    vertical-align: middle;
+    color: #FFFFFF;
+}
+
+.button-share:hover,
+.button-info:hover,
+.button-edit:hover {
+    background-color: #2B2A27;
+}
