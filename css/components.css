@@ -1,9 +1,6 @@
 .button-add {
     background-color: #1B1A17;
-    color: #ff8303;
     border-radius: 8px;
-    font-size: 40px;
-    font-weight: bold;
     border: 2px solid #FF8303;
     padding: 0 1.5rem 0 1.5rem;
     cursor: pointer;
