@@ -16,3 +16,9 @@
     border-bottom: 3px solid #FF8303;
     padding: 1rem;
 }
+
+.tasks__list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
