@@ -61,7 +61,15 @@ function createTaskElement(task) {
     titleEl.textContent = task.title;
     descEl.textContent = task.description;
 
+    const taskItem = el.querySelector('.task__content');
+    const taskTools = el.querySelector('.task__tools');
+    taskItem.addEventListener('click', () => toggleTaskTools(taskTools))
+
     return el;
+}
+
+function toggleTaskTools(taskTools) {
+    taskTools.classList.toggle('hidden');
 }
 
 document.addEventListener('DOMContentLoaded', init);
