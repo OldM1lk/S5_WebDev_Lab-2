@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/tasks.css">
     <link rel="stylesheet" href="css/task.css">
+    <link rel="stylesheet" href="css/alert.css">
 </head>
 <body>
 <header>
@@ -48,6 +49,15 @@
         </div>
     </li>
 </template>
+<div class="alert hidden">
+    <div class="alert__content">
+        <p class="alert__text">Delete this task?</p>
+        <div class="alert__buttons">
+            <button class="button-confirm" type="submit">Yes</button>
+            <button class="button-cancel">No</button>
+        </div>
+    </div>
+</div>
 <script src="index.js"></script>
 </body>
 </html>
