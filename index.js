@@ -113,6 +113,9 @@ function openAlert(id) {
         closeWindow(alert);
     };
     cancelButton.onclick = () => closeWindow(alert);
+    alert.addEventListener('click', e => {
+        if (e.target === alert) closeWindow(alert);
+    })
 }
 
 function editTask(id, newTitle, newDescription) {
@@ -140,6 +143,9 @@ function openEditWindow(task) {
         closeWindow(editWindow);
     }
     cancelButton.onclick = () => closeWindow(editWindow);
+    editWindow.addEventListener('click', e => {
+        if (e.target === editWindow) closeWindow(editWindow);
+    })
 }
 
 function openShareBox() {
