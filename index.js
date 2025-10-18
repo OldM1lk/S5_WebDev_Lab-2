@@ -1,4 +1,5 @@
 let tasks = [];
+const STORAGE_KEY = 'tasks';
 
 const form = document.querySelector('.form');
 const inputTitle = form.querySelector('input[name="title"]');
@@ -14,8 +15,18 @@ const shareBox = document.querySelector('.share-box');
 document.addEventListener('DOMContentLoaded', init);
 
 function init() {
+    loadTasks()
     setupEventListeners();
     renderTasks();
+}
+
+function loadTasks() {
+    const data = localStorage.getItem(STORAGE_KEY);
+    tasks = data ? JSON.parse(data) : [];
+}
+
+function saveTasks() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
 }
 
 function setupEventListeners() {
@@ -41,6 +52,7 @@ function addTask(title, description) {
         description,
     };
     tasks.push(task);
+    saveTasks();
     renderTasks();
 }
 
@@ -51,11 +63,13 @@ function editTask(id, newTitle, newDescription) {
 
     task.title = newTitle;
     task.description = newDescription;
+    saveTasks();
     renderTasks();
 }
 
 function deleteTask(id) {
     tasks = tasks.filter(t => t.id !== id);
+    saveTasks();
     renderTasks();
 }
 
