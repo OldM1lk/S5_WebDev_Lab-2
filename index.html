@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="css/tasks.css">
     <link rel="stylesheet" href="css/task.css">
     <link rel="stylesheet" href="css/alert.css">
+    <link rel="stylesheet" href="css/edit-window.css">
 </head>
 <body>
 <header>
@@ -55,6 +56,18 @@
         <div class="alert__buttons">
             <button class="button-confirm" type="submit">Yes</button>
             <button class="button-cancel">No</button>
+        </div>
+    </div>
+</div>
+<div class="edit-window hidden">
+    <div class="edit-window__content">
+        <div class="edit-window__inputs">
+            <input class="input" type="text" name="new-title" placeholder="Mini input...">
+            <textarea class="textarea" type="text" name="new-description" placeholder="Max input..."></textarea>
+        </div>
+        <div class="edit-window__buttons">
+            <button class="button-cancel">Cancel</button>
+            <button class="button-confirm" type="submit">Save</button>
         </div>
     </div>
 </div>
