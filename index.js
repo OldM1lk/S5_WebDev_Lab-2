@@ -8,6 +8,7 @@ const emptyText = document.querySelector('.tasks__empty');
 const taskTemplate = document.getElementById('task-template');
 const alert = document.querySelector('.alert');
 const editWindow = document.querySelector('.edit-window');
+const shareBox = document.querySelector('.share-box');
 
 function init() {
     renderTasks();
@@ -61,6 +62,7 @@ function createTaskElement(task) {
     const descEl = el.querySelector('.text__description');
     const deleteButton = el.querySelector('.button-delete');
     const editButton = el.querySelector('.button-edit');
+    const shareButton = el.querySelector('.button-share');
 
     titleEl.textContent = task.title;
     descEl.textContent = task.description;
@@ -73,6 +75,11 @@ function createTaskElement(task) {
     editButton.addEventListener('click', e => {
         e.stopPropagation();
         openEditWindow(task);
+    })
+
+    shareButton.addEventListener('click', e => {
+        e.stopPropagation();
+        openShareBox()
     })
 
     const taskItem = el.querySelector('.task__content');
@@ -133,6 +140,14 @@ function openEditWindow(task) {
         closeWindow(editWindow);
     }
     cancelButton.onclick = () => closeWindow(editWindow);
+}
+
+function openShareBox() {
+    shareBox.classList.remove('hidden');
+
+    shareBox.addEventListener('click', e => {
+        if (e.target === shareBox) closeWindow(shareBox);
+    })
 }
 
 document.addEventListener('DOMContentLoaded', init);
