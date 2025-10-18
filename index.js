@@ -6,27 +6,32 @@ const inputDescription = form.querySelector('input[name="description"]');
 const tasksList = document.querySelector('.tasks__list');
 const emptyText = document.querySelector('.tasks__empty');
 const taskTemplate = document.getElementById('task-template');
+
 const alert = document.querySelector('.alert');
 const editWindow = document.querySelector('.edit-window');
 const shareBox = document.querySelector('.share-box');
 
+document.addEventListener('DOMContentLoaded', init);
+
 function init() {
-    renderTasks();
     setupEventListeners();
+    renderTasks();
 }
 
 function setupEventListeners() {
-    form.addEventListener('submit', e => {
-        e.preventDefault();
+    form.addEventListener('submit', handleAddTask)
+}
 
-        const title = inputTitle.value.trim();
-        const description = inputDescription.value.trim();
+function handleAddTask(e) {
+    e.preventDefault();
 
-        if (!title) return;
+    const title = inputTitle.value.trim();
+    const description = inputDescription.value.trim();
 
-        addTask(title, description);
-        form.reset();
-    });
+    if (!title) return;
+
+    addTask(title, description);
+    form.reset();
 }
 
 function addTask(title, description) {
@@ -35,62 +40,18 @@ function addTask(title, description) {
         title,
         description,
     };
-
     tasks.push(task);
     renderTasks();
 }
 
-function renderTasks() {
-    tasksList.innerHTML = '';
+function editTask(id, newTitle, newDescription) {
+    const task = tasks.find(t => t.id === id);
 
-    if (tasks.length === 0) {
-        emptyText.style.display = 'block';
-        return;
-    }
-    emptyText.style.display = 'none';
+    if (!task) return
 
-    tasks.forEach(task => {
-        const taskEl = createTaskElement(task);
-        tasksList.appendChild(taskEl);
-    });
-}
-
-function createTaskElement(task) {
-    const el = taskTemplate.content.cloneNode(true);
-
-    const titleEl = el.querySelector('.text__title');
-    const descEl = el.querySelector('.text__description');
-    const deleteButton = el.querySelector('.button-delete');
-    const editButton = el.querySelector('.button-edit');
-    const shareButton = el.querySelector('.button-share');
-
-    titleEl.textContent = task.title;
-    descEl.textContent = task.description;
-
-    deleteButton.addEventListener('click', e => {
-        e.stopPropagation();
-        openAlert(task.id);
-    })
-
-    editButton.addEventListener('click', e => {
-        e.stopPropagation();
-        openEditWindow(task);
-    })
-
-    shareButton.addEventListener('click', e => {
-        e.stopPropagation();
-        openShareBox()
-    })
-
-    const taskItem = el.querySelector('.task__content');
-    const taskTools = el.querySelector('.task__tools');
-    taskItem.addEventListener('click', () => toggleTaskTools(taskTools))
-
-    return el;
-}
-
-function toggleTaskTools(taskTools) {
-    taskTools.classList.toggle('hidden');
+    task.title = newTitle;
+    task.description = newDescription;
+    renderTasks();
 }
 
 function deleteTask(id) {
@@ -98,62 +59,106 @@ function deleteTask(id) {
     renderTasks();
 }
 
-function closeWindow(window) {
-    window.classList.add('hidden');
-}
+function renderTasks() {
+    tasksList.innerHTML = '';
 
-function openAlert(id) {
-    alert.classList.remove('hidden');
-
-    const confirmButton = alert.querySelector('.button-confirm');
-    const cancelButton = alert.querySelector('.button-cancel');
-
-    confirmButton.onclick = () => {
-        deleteTask(id);
-        closeWindow(alert);
-    };
-    cancelButton.onclick = () => closeWindow(alert);
-    alert.addEventListener('click', e => {
-        if (e.target === alert) closeWindow(alert);
-    })
-}
-
-function editTask(id, newTitle, newDescription) {
-    const task = tasks.find(t => t.id === id);
-    if (task) {
-        task.title = newTitle;
-        task.description = newDescription;
+    if (!tasks.length) {
+        emptyText.style.display = 'block';
+        return;
     }
-    renderTasks();
+
+    emptyText.style.display = 'none';
+    tasks.forEach(task => tasksList.append(createTaskElement(task)));
 }
 
-function openEditWindow(task) {
-    editWindow.classList.remove('hidden');
+function createTaskElement(task) {
+    const fragment = taskTemplate.content.cloneNode(true);
+    const titleEl = fragment.querySelector('.text__title');
+    const descEl = fragment.querySelector('.text__description');
+    const deleteBtn = fragment.querySelector('.button-delete');
+    const editBtn = fragment.querySelector('.button-edit');
+    const shareBtn = fragment.querySelector('.button-share');
+    const tools = fragment.querySelector('.task__tools');
+    const content = fragment.querySelector('.task__content');
+
+    titleEl.textContent = task.title;
+    descEl.textContent = task.description;
+
+    deleteBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        openDeleteConfirm(task.id);
+    });
+
+    editBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        openEditModal(task);
+    });
+
+    shareBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        openShareModal();
+    });
+
+    content.addEventListener('click', () => tools.classList.toggle('hidden'));
+
+    return fragment;
+}
+
+function openModal(modal) {
+    modal.classList.remove('hidden');
+    modal.addEventListener('click', e => {
+        if (e.target === modal) closeModal(modal);
+    });
+}
+
+function closeModal(modal) {
+    modal.classList.add('hidden');
+}
+
+function openDeleteConfirm(id) {
+    openModal(alert);
+
+    const confirm = alert.querySelector('.button-confirm');
+    const cancel = alert.querySelector('.button-cancel');
+
+    confirm.replaceWith(confirm.cloneNode(true));
+    cancel.replaceWith(cancel.cloneNode(true));
+
+    const newConfirm = alert.querySelector('.button-confirm');
+    const newCancel = alert.querySelector('.button-cancel');
+
+    newConfirm.addEventListener('click', () => {
+        deleteTask(id);
+        closeModal(alert);
+    });
+    newCancel.addEventListener('click', () => closeModal(alert));
+}
+
+function openEditModal(task) {
+    openModal(editWindow);
 
     const titleInput = editWindow.querySelector('input[name="new-title"]');
     const descriptionInput = editWindow.querySelector('textarea[name="new-description"]');
-    const cancelButton = editWindow.querySelector('.button-cancel');
-    const saveButton = editWindow.querySelector('.button-confirm');
+    const saveBtn = editWindow.querySelector('.button-confirm');
+    const cancelBtn = editWindow.querySelector('.button-cancel');
 
     titleInput.value = task.title;
     descriptionInput.value = task.description;
 
-    saveButton.onclick = () => {
+    saveBtn.replaceWith(saveBtn.cloneNode(true));
+    cancelBtn.replaceWith(cancelBtn.cloneNode(true));
+
+    const newSave = editWindow.querySelector('.button-confirm');
+    const newCancel = editWindow.querySelector('.button-cancel');
+
+    newSave.addEventListener('click', () => {
         editTask(task.id, titleInput.value.trim(), descriptionInput.value.trim());
-        closeWindow(editWindow);
-    }
-    cancelButton.onclick = () => closeWindow(editWindow);
-    editWindow.addEventListener('click', e => {
-        if (e.target === editWindow) closeWindow(editWindow);
-    })
+        closeModal(editWindow);
+    });
+
+    newCancel.addEventListener('click', () => closeModal(editWindow));
 }
 
-function openShareBox() {
-    shareBox.classList.remove('hidden');
-
-    shareBox.addEventListener('click', e => {
-        if (e.target === shareBox) closeWindow(shareBox);
-    })
+function openShareModal() {
+    openModal(shareBox);
 }
-
-document.addEventListener('DOMContentLoaded', init);
